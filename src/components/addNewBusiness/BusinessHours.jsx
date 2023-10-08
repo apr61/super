@@ -44,6 +44,7 @@ const allDays = [
 const daysOfWeek = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
 
 const BusinessHours = () => {
+  document.title = 'Add business working hours'
   const { businessWorkingHours, reducerHelper, next } = useAddNewBusinessContext()
   const handleOnChange = (value, name) => {
     if (daysOfWeek.includes(name)) {

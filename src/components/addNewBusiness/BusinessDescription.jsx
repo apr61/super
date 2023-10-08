@@ -4,6 +4,7 @@ import { useAddNewBusinessContext } from '../../context/AddNewBusiness'
 import { SET_BUSINESS_DESCRIPTION } from '../../reducers/AddNewBusiness'
 
 const BusinessDescription = () => {
+    document.title = 'Add business description'
     const {businessDescription, reducerHelper, next} = useAddNewBusinessContext()
     const handleOnChange = (text) => {
         reducerHelper(SET_BUSINESS_DESCRIPTION, text)

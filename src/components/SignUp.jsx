@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import { signUp } from '../services/auth'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import {UserRoles, picURL} from '../constants/User'
+import toast from 'react-hot-toast'
 
 const SignUp = () => {
+    document.title = 'Super - Create account'
     const [email, setEmail] = useState('')
     const [name, setName] = useState('')
     const [password, setPassword] = useState('')
@@ -13,9 +15,9 @@ const SignUp = () => {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         try {
-            await signUp(email, password, name, UserRoles['user'])
+            await signUp(email, password, name, UserRoles['user'], picURL)
         } catch (err) {
-            console.error(err)
+            toast.error(err.message)
         } finally {
             setEmail('')
             setName('')

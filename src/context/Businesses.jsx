@@ -3,6 +3,7 @@ import { convertToAMPM, days, isTimeBetween } from "../utils/timeUtils"
 import { useSearchParams } from "react-router-dom"
 import { getAllBusinessesService } from '../services/business'
 import { getAllReviewsByBusinessIdService } from '../services/review'
+import toast from "react-hot-toast"
 
 const BusinessContext = createContext({})
 
@@ -30,7 +31,7 @@ const BusinessProvider = ({ children }) => {
             const data = await getAllReviewsByBusinessIdService(businessId);
             return data
         } catch (error) {
-            console.error(`Error fetching reviews for business ${businessId}: ${error}`);
+            toast.error(`Error fetching reviews for business ${businessId}: ${error}`)
             return [];
         }
     }
@@ -46,7 +47,7 @@ const BusinessProvider = ({ children }) => {
             const businesses = await Promise.all(businessPromises);
             setBusinesses(businesses);
         } catch (err) {
-            console.error(err);
+            toast.error(err.message);
         } finally {
             setIsLoading(false);
         }

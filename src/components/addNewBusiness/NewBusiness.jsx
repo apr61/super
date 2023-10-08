@@ -4,6 +4,8 @@ import { SET_BUSINESS_NAME } from '../../reducers/AddNewBusiness';
 import Button from '../Button';
 
 const NewBusiness = () => {
+    document.title = 'Add business name'
+
     const { businessName, reducerHelper, next } = useAddNewBusinessContext();
     const handleOnChange = (text) => {
         reducerHelper(SET_BUSINESS_NAME, text)

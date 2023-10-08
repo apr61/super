@@ -5,12 +5,13 @@ import ReviewStar from '../components/ReviewStar'
 import { useBusinesses } from '../context/Businesses'
 import BusinessImageCarousel from '../components/BusinessImageCarousel'
 import Filter from '../components/Filter'
+import Loader from '../components/Loader'
 
 
 const Search = () => {
   const { today, renderStatus, businesses, isLoading, categorySelected, prevSearchParams: { find_desc } } = useBusinesses()
-
-  if (isLoading) return <h1>Loading...</h1>
+  if (isLoading) return <Loader />
+  document.title = businesses.length > 0 ? `Super - Best ${categorySelected}` : `Super - No results found for ${find_desc.toLowerCase()}`
   return (
     <div className='m-[1rem] grid gap-2 grid-cols-[20%_50%_30%] pt-6'>
       <Filter />

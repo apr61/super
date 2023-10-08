@@ -7,6 +7,8 @@ import { SubCategoriesList } from '../../constants/Categories'
 import CloseIcon from '@mui/icons-material/Close';
 
 const BusinessCategory = () => {
+  document.title = 'Add business category'
+
   const { businessCategory, reducerHelper, next } = useAddNewBusinessContext()
   const handleOnChange = (value, name) => {
     if (name === "category") {

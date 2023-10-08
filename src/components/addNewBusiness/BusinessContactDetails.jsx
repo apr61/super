@@ -6,6 +6,7 @@ import { SET_BUSINESS_CONTACT } from '../../reducers/AddNewBusiness';
 const IndianPhoneNumberRegex = /^(0|\+91)?[6789]\d{9}$/;
 
 const BusinessContactDetails = () => {
+    document.title = 'Add business contact bsuniess details'
     const { businessContact, reducerHelper, next } = useAddNewBusinessContext()
     const handleOnChange = (value, name) => {
         if (name === 'phoneNumber') {

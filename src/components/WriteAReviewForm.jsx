@@ -8,6 +8,7 @@ import { createRouterPath } from '../utils/routerUtils'
 import { serverTimestamp } from 'firebase/firestore'
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { uploadPhotosService } from '../services/business'
+import toast from 'react-hot-toast'
 
 const WriteAReviewForm = ({ businessName, businessId, starRating, businessAddress }) => {
   const [currentStarRating, setCurrentStarRating] = useState(starRating || 0)
@@ -55,9 +56,10 @@ const WriteAReviewForm = ({ businessName, businessId, starRating, businessAddres
       const imageUrls = await uploadPhotosService(businessName, reviewImages)
       await createANewReview({...reviewDataServer, reviewImages: imageUrls})
     } catch (err) {
-      console.error(err)
+      toast.error(err.message)
     } finally {
       setIsLoading(false)
+      toast.success('Review added successfull')
     }
     navigate(`/business/${createRouterPath(businessName.toLowerCase() + ' ' + businessAddress.city.toLowerCase() + ' ' + businessId)}`)
   }

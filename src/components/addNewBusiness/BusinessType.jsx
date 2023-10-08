@@ -4,6 +4,7 @@ import { SET_BUSINESS_TYPE } from '../../reducers/AddNewBusiness'
 import Button from '../Button'
 
 const BusinessType = () => {
+    document.title = 'Add business type'
     const { businessName, reducerHelper, businessType, next } = useAddNewBusinessContext()
     const handleOnChange = (e) => {
         const text = e.target.value

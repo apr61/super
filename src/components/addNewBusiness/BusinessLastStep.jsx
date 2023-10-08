@@ -4,6 +4,7 @@ import { useAddNewBusinessContext } from '../../context/AddNewBusiness';
 import Button from '../Button';
 
 const BusinessLastStep = () => {
+    document.title = 'One step to go'
     const { createNewBusiness, businessName, isLoading } = useAddNewBusinessContext();
     return (
         <>

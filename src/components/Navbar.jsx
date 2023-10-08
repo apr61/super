@@ -35,21 +35,11 @@ export const Navbar = () => {
                   <AddBusinessIcon /> Add a Business
                 </Link>
               </li>
-              {
-                isLoggedIn ? (
-                  <li>
-                    <Link to='/business/my' className='p-2 rounded-md text-gray-500 hover:bg-primary-500 hover:text-black flex items-center gap-2'>
-                      <PersonIcon /> My Businesses
-                    </Link>
-                  </li>
-                ) : (
-                  <li>
-                    <Link to='/login' className='p-2 rounded-md text-gray-500 hover:bg-primary-500 hover:text-black flex items-center gap-2'>
-                      <PersonIcon /> Login to Business Account
-                    </Link>
-                  </li>
-                )
-              }
+              <li>
+                <Link to='/business/my' className='p-2 rounded-md text-gray-500 hover:bg-primary-500 hover:text-black flex items-center gap-2'>
+                  <PersonIcon /> My Businesses
+                </Link>
+              </li>
             </Dropdown>
           </ul>
           <li>

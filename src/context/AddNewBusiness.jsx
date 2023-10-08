@@ -14,6 +14,7 @@ import { createNewBusinessService, uploadPhotosService } from "../services/busin
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "./AuthContext";
 import { useBusinesses } from "./Businesses";
+import toast from "react-hot-toast";
 
 const AddNewBusinessContext = createContext({})
 
@@ -43,6 +44,7 @@ const AddNewBusinessProvider = ({ children }) => {
         setBusinesses((prev) => [...prev, data])
         reducerHelper(SET_CLEAR, AddNewBusinessInitialState)
         setIsLoading(false)
+        toast.success('Business added successfully')
         navigate('/business/my')
     }
     

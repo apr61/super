@@ -3,6 +3,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../FirebaseConfig";
 import { getUserDetails, logOut } from "../services/auth";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const AuthContext = createContext()
 
@@ -12,7 +13,7 @@ export function useAuthContext() {
 
 function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState({})
-    const [userDetails, setUserDetails] = useState({})
+    // const [userDetails, setUserDetails] = useState({})
     const [isLoading, setIsLoading] = useState(true)
 
     const navigate = useNavigate()
@@ -21,17 +22,8 @@ function AuthProvider({ children }) {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
                 setCurrentUser(user)
-                // getUserDetails(user.uid)
-                //     .then((data) => {
-                //         setUserDetails(data)
-                //         setIsLoading(false)
-                //     })
-                //     .catch(err => {
-                //         console.error('Error fetching user data: ', err);
-                //         setIsLoading(false);
-                //     })
+                setIsLoading(false);
             } else {
-                setUserDetails(null);
                 setCurrentUser(null)
                 setIsLoading(false);
             }
@@ -41,11 +33,12 @@ function AuthProvider({ children }) {
 
     const logOutUser = async () => {
         await logOut()
+        toast.success('Logout successfull')
         navigate('/')
     }
 
     return (
-        <AuthContext.Provider value={{ currentUser, userDetails, logOutUser, isLoading, setIsLoading }}>
+        <AuthContext.Provider value={{ currentUser, logOutUser, isLoading, setIsLoading }}>
             {children}
         </AuthContext.Provider>
     )

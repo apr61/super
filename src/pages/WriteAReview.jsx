@@ -1,9 +1,10 @@
 import React from 'react'
 import Search from '../components/Search'
 import StarRating from '../components/StarRating'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, createSearchParams, useNavigate } from 'react-router-dom'
 import { useBusinesses } from '../context/Businesses'
 import { createRouterPath } from '../utils/routerUtils'
+import Loader from '../components/Loader'
 
 const searchExtraStyles = 'max-w-[50rem]'
 
@@ -12,7 +13,10 @@ const WriteAReview = () => {
 	const { businesses, isLoading } = useBusinesses()
 	const navigate = useNavigate()
 	const handleStarReviewClick = (currentStar, businessId) => {
-		navigate(`/writeareview/${businessId}/rating/${currentStar}`)
+		navigate({
+			pathname: `/writeareview/${businessId}`,
+			search: createSearchParams({ rating: currentStar }).toString(),
+		})
 	}
 	return (
 		<div className='max-w-[75rem] mx-auto my-20'>
@@ -22,7 +26,7 @@ const WriteAReview = () => {
 				<Search extraStyles={searchExtraStyles} />
 			</header>
 			{
-				isLoading ? <h1>Loading...</h1> : (
+				isLoading ? <Loader /> : (
 					<section className='mt-20 mb-10'>
 						<h2 className='text-xl font-bold'>Visited one of these places recently?</h2>
 						<div className='w-full grid grid-cols-2 gap-8 my-8'>

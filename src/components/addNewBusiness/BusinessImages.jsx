@@ -5,6 +5,7 @@ import { useAddNewBusinessContext } from '../../context/AddNewBusiness'
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
 const BusinessImages = () => {
+    document.title = 'Add business images'
     const { reducerHelper, next, businessImages} = useAddNewBusinessContext()
     const handleOnChange = (images) => {
         reducerHelper(SET_IMAGES, [...businessImages, ...images])

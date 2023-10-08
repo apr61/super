@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import WriteAReviewForm from '../components/WriteAReviewForm'
-import { useParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 import { getBusinessByIdService } from '../services/business'
+import toast from 'react-hot-toast'
+import Loader from'../components/Loader'
 
 const WriteAReviewFormPage = () => {
-  const { businessId, rating } = useParams();
+  const { businessId } = useParams();
+  const [searchParams, _] = useSearchParams({rating: 0})
+  const rating = searchParams.get("rating") || 0
   const [business, setBusiness] = useState({});
   const [isLoading, setIsLoading] = useState(true)
   const getBusinessById = async (businessId) => {
@@ -12,7 +16,7 @@ const WriteAReviewFormPage = () => {
       const data = await getBusinessByIdService(businessId);
       setBusiness({ ...data });
     } catch (err) {
-      console.error(err);
+      toast.error(err)
     } finally {
       setIsLoading(false);
     }
@@ -20,9 +24,8 @@ const WriteAReviewFormPage = () => {
   useEffect(() => {
     getBusinessById(businessId);
   }, [businessId, rating]);
-  console.log(business)
   document.title = `Write a Review for ${business.businessName}`
-  // if(isLoading) return <h1>Loading....</h1>
+  if(isLoading) return <Loader />
   return (
     <div className='max-w-[60rem] mx-auto my-10'>
       <WriteAReviewForm {...business} starRating={+rating}/>

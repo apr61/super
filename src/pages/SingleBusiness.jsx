@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { getBusinessByIdService } from '../services/business';
 import { convertToAMPM, days, isTimeBetween } from '../utils/timeUtils'
 import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
@@ -16,6 +16,8 @@ import { dateFormatterDDMM } from '../utils/timeUtils'
 import ReviewStar from '../components/ReviewStar';
 import { reviewStarData } from '../components/StarRating';
 import { useBusinesses } from '../context/Businesses';
+import toast from 'react-hot-toast';
+import Loader from '../components/Loader';
 
 const imageStyles = ['col-span-2 row-span-2', 'col-start-3', 'col-start-4', 'col-start-3 row-start-2', 'col-start-4 row-start-2']
 
@@ -26,13 +28,13 @@ const SingleBusiness = () => {
   const [business, setBusiness] = useState({});
   const [reviews, setReviews] = useState([]);
   const { today, renderStatus, isOpenDay, isOpenNowToday, businessHoursForDay } = useBusinesses()
-
+  const navigate = useNavigate()
   const getBusinessById = async (businessId) => {
     try {
       const data = await getBusinessByIdService(businessId);
       setBusiness({ ...data });
     } catch (err) {
-      console.error(err);
+      toast.error(err);
     } finally {
       setIsLoading(false);
     }
@@ -44,7 +46,7 @@ const SingleBusiness = () => {
       const data = await getAllReviewsByBusinessIdService(businessId);
       setReviews([...data])
     } catch (err) {
-      console.error(err)
+      toast.error(err)
     } finally {
       setIsLoading(false)
     }
@@ -80,7 +82,11 @@ const SingleBusiness = () => {
     </div>
   ));
 
-  if (isLoading) return <h1>Loading...</h1>
+  const handleWriteReview = () => {
+    navigate(`/writeareview/${businessId}`)
+  }
+
+  if (isLoading) return <Loader />
 
   return (
     <div className='max-w-[70rem] mx-auto my-10'>
@@ -155,7 +161,10 @@ const SingleBusiness = () => {
         </div>
       </section>
       <section className='border-b pt-6 pb-2' id='ratings'>
-        <h2 className='text-xl font-bold'>Reviews</h2>
+        <div className='flex max-w-[40rem] justify-between'>
+          <h2 className='text-xl font-bold'>Reviews</h2>
+          <button className='border px-4 py-2 rounded-md bg-primary-300 hover:bg-opacity-80' onClick={handleWriteReview}>Write a reviews</button>
+        </div>
         <div className='my-8 flex gap-12 items-center'>
           <div>
             <h3 className='text-gray-800 font-medium'>Overall rating</h3>

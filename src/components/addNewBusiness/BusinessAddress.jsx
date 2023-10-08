@@ -43,6 +43,7 @@ const IndianStates = [
 ]
 
 const BusinessAddress = () => {
+    document.title = 'Add business address'
     const { reducerHelper, businessAddress, next } = useAddNewBusinessContext()
     const handleOnChange = (value, name) => {
         if (name === 'country') {

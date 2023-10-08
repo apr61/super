@@ -5,7 +5,8 @@ import { useAddNewBusinessContext } from '../context/AddNewBusiness';
 
 
 const AddNewBusinessPage = () => {
-    const { step, back, steps, currentStepIndex, isFirstStep, isLastStep } = useAddNewBusinessContext();
+    document.title = 'Add new business'
+    const { step, back, steps, currentStepIndex, isFirstStep } = useAddNewBusinessContext();
     const progess = Math.floor((currentStepIndex+ 1) / steps.length * 100)
     return (
         <form className='max-w-[40rem] mx-auto my-20'>
