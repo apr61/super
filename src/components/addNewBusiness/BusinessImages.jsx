@@ -10,7 +10,7 @@ const BusinessImages = () => {
     const handleOnChange = (images) => {
         reducerHelper(SET_IMAGES, [...businessImages, ...images])
     }
-    const isDisabled = businessImages?.length > 0
+    const isDisabled = businessImages?.length >= 6
     return (
         <>
             <div className='flex flex-col gap-2 ml-auto'>
@@ -35,6 +35,7 @@ const BusinessImages = () => {
                     }
                 </ul>
             )}
+            <p className='text-sm text-gray-400'>Note : Add a minimum of 6 images</p>
             <Button text={'Next'} handleOnClick={next} isDisabled={!isDisabled} />
         </>
     )
