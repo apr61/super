@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { getBusinessByIdService } from '../services/business';
-import { convertToAMPM, days, isTimeBetween } from '../utils/timeUtils'
+import { days } from '../utils/timeUtils'
 import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
 import TakeoutDiningIcon from '@mui/icons-material/TakeoutDining';
 import WifiIcon from '@mui/icons-material/Wifi';
@@ -18,11 +18,13 @@ import { reviewStarData } from '../components/StarRating';
 import { useBusinesses } from '../context/Businesses';
 import toast from 'react-hot-toast';
 import Loader from '../components/Loader';
+import { useAuthContext } from '../context/AuthContext';
 
-const imageStyles = ['col-span-2 row-span-2', 'col-start-3', 'col-start-4', 'col-start-3 row-start-2', 'col-start-4 row-start-2']
+export const imageStyles = ['col-span-2 row-span-2', 'col-start-3', 'col-start-4', 'col-start-3 row-start-2', 'col-start-4 row-start-2']
 
 const SingleBusiness = () => {
   const location = useLocation();
+  const {currentUser} = useAuthContext()
   const businessId = getBusinessIdFromRoutePath(location.pathname)
   const [isLoading, setIsLoading] = useState(true);
   const [business, setBusiness] = useState({});
@@ -163,7 +165,11 @@ const SingleBusiness = () => {
       <section className='border-b pt-6 pb-2' id='ratings'>
         <div className='flex max-w-[40rem] justify-between'>
           <h2 className='text-xl font-bold'>Reviews</h2>
-          <button className='border px-4 py-2 rounded-md bg-primary-300 hover:bg-opacity-80' onClick={handleWriteReview}>Write a reviews</button>
+          {
+            business.uid !== currentUser.uid && (
+              <button className='border px-4 py-2 rounded-md bg-primary-300 hover:bg-opacity-80' onClick={handleWriteReview}>Write a reviews</button>
+            )
+          }
         </div>
         <div className='my-8 flex gap-12 items-center'>
           <div>

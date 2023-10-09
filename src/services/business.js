@@ -41,7 +41,9 @@ export const getAllBusinessesService = async () => {
     let productsArray = [];
     const querySnapshot = await getDocs(collection(db, "businesses"));
     querySnapshot.forEach((doc) => {
-        productsArray.push({ businessId: doc.id, ...doc.data() });
+        if (doc.data().isVerified) {
+            productsArray.push({ businessId: doc.id, ...doc.data() });
+        }
     });
     return productsArray;
 }

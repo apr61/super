@@ -10,7 +10,7 @@ const BusinessImages = () => {
     const handleOnChange = (images) => {
         reducerHelper(SET_IMAGES, [...businessImages, ...images])
     }
-    const isDisabled = businessImages?.length >= 6
+    const isDisabled = businessImages?.length >= 5
     return (
         <>
             <div className='flex flex-col gap-2 ml-auto'>

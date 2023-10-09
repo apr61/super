@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer, useState } from "react"
+import { createContext, useContext, useEffect, useReducer, useState } from "react"
 import { AddNewBusinessInitialState, SET_CLEAR, addNewBusinessReducer } from "../reducers/AddNewBusiness"
 import useMultiStepForm from '../hooks/useMultiStepForm'
 import NewBusiness from '../components/addNewBusiness/NewBusiness';
@@ -10,7 +10,7 @@ import BusinessHours from '../components/addNewBusiness/BusinessHours';
 import BusinessDescription from '../components/addNewBusiness/BusinessDescription';
 import BusinessImages from "../components/addNewBusiness/BusinessImages";
 import BusinessLastStep from "../components/addNewBusiness/BusinessLastStep";
-import { createNewBusinessService, uploadPhotosService } from "../services/business";
+import { createNewBusinessService, getAllBusinessesByUidService, uploadPhotosService } from "../services/business";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "./AuthContext";
 import { useBusinesses } from "./Businesses";
@@ -28,9 +28,10 @@ const AllSteps = [<NewBusiness />, <BusinessType />, <BusinessCategory />, <Busi
 const AddNewBusinessProvider = ({ children }) => {
     const [AddNewBusinessState, AddNewBusinessDispatch] = useReducer(addNewBusinessReducer, AddNewBusinessInitialState)
     const { step, next, back, steps, currentStepIndex, isFirstStep, isLastStep } = useMultiStepForm(AllSteps)
-    const {currentUser} = useAuthContext()
-    const {setBusinesses} = useBusinesses()
-    const [isLoading, setIsLoading] = useState(false)
+    const { currentUser } = useAuthContext()
+    const { setBusinesses } = useBusinesses()
+    const [isLoading, setIsLoading] = useState(true)
+    const [userBusinesses, setUserBusinesses] = useState({})
     const navigate = useNavigate()
 
     function reducerHelper(type, payload) {
@@ -47,7 +48,20 @@ const AddNewBusinessProvider = ({ children }) => {
         toast.success('Business added successfully')
         navigate('/business/my')
     }
-    
+    const getUserBusinesses = async (uid) => {
+        try {
+            const data = await getAllBusinessesByUidService(uid)
+            setUserBusinesses(data[0])
+        } catch (err) {
+            toast.error(err)
+        } finally {
+            setIsLoading(false)
+        }
+    }
+    useEffect(() => {
+        getUserBusinesses(currentUser.uid)
+    }, [currentUser.uid])
+
     return (
         <AddNewBusinessContext.Provider value={{
             ...AddNewBusinessState,
@@ -57,7 +71,8 @@ const AddNewBusinessProvider = ({ children }) => {
             isFirstStep,
             isLastStep,
             createNewBusiness,
-            isLoading
+            isLoading,
+            userBusinesses
         }}>
             {children}
         </AddNewBusinessContext.Provider>

@@ -60,7 +60,7 @@ export const Navbar = () => {
                     Icon={AccountCircleIcon}
                     dropDownlistStyles={'mt-6 right-2 p-4 flex flex-col gap-2'}
                     dropDownButtonStyles={''}>
-                    <Link className='p-2 rounded-md text-gray-500 hover:bg-primary-500 hover:text-black flex items-center gap-2'><PersonIcon /> Account</Link>
+                    <Link to="/account" className='p-2 rounded-md text-gray-500 hover:bg-primary-500 hover:text-black flex items-center gap-2'><PersonIcon /> Account</Link>
                     <button className='bg-red-500 px-4 py-2 text-white rounded-md' onClick={() => logOutUser()}><LogoutIcon /> Log Out</button>
                   </Dropdown>
                 </li>

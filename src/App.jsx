@@ -16,6 +16,7 @@ import BusinessProvider from "./context/Businesses"
 import SingleBusiness from "./pages/SingleBusiness"
 import Search from "./pages/Search"
 import PageNotFound from "./components/PageNotFound"
+import Account from "./pages/Account"
 
 function App() {
   const { currentUser } = useAuthContext()
@@ -29,13 +30,14 @@ function App() {
             <Route path="/writeareview" element={<WriteAReview />} />
             <Route element={<RequireAuth />}>
               <Route path="/writeareview/:businessId" element={<WriteAReviewFormPage />} />
+              <Route path="/account" element={<Account />} />
             </Route>
             <Route path="/business">
               <Route element={<RequireAuth />}>
                 <Route element={<ContextLayout provider={AddNewBusinessProvider} />} >
                   <Route path="new" element={<AddNewBusinessPage />} />
+                  <Route path="my" element={<MyBusinesses />} />
                 </Route>
-                <Route path="my" element={<MyBusinesses />} />
               </Route>
               <Route path=":businessName" element={<SingleBusiness />} />
             </Route>
