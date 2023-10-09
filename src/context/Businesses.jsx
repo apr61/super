@@ -47,7 +47,9 @@ const BusinessProvider = ({ children }) => {
             const businesses = await Promise.all(businessPromises);
             setBusinesses(businesses);
         } catch (err) {
-            toast.error(err.message);
+            err = err.code.split('/')[1].split('-').join(' ')
+            toast.error(err);
+            return
         } finally {
             setIsLoading(false);
         }

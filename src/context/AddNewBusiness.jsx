@@ -51,9 +51,15 @@ const AddNewBusinessProvider = ({ children }) => {
     const getUserBusinesses = async (uid) => {
         try {
             const data = await getAllBusinessesByUidService(uid)
-            setUserBusinesses(data[0])
+            if (data.length > 0) {
+                setUserBusinesses(data[0])
+            } else {
+                setUserBusinesses({})
+            }
         } catch (err) {
-            toast.error(err)
+            err = err.code.split('/')[1].split('-').join(' ')
+            toast.error(err);
+            return
         } finally {
             setIsLoading(false)
         }

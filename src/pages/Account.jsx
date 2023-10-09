@@ -5,7 +5,6 @@ import Loader from '../components/Loader'
 const Account = () => {
     const { currentUser, isLoading } = useAuthContext()
     if(isLoading) (<Loader />)
-    console.log(currentUser);
     return (
         <div className='max-w-[40rem] mx-auto mt-12 flex flex-col gap-4 items-center'>
             <div className='w-40 h-40 rounded-full overflow-hidden'>

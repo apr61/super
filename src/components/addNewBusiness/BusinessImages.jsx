@@ -35,7 +35,7 @@ const BusinessImages = () => {
                     }
                 </ul>
             )}
-            <p className='text-sm text-gray-400'>Note : Add a minimum of 6 images</p>
+            <p className='text-sm text-gray-400'>Note : Add a minimum of 5 images</p>
             <Button text={'Next'} handleOnClick={next} isDisabled={!isDisabled} />
         </>
     )

@@ -56,7 +56,7 @@ const WriteAReviewForm = ({ businessName, businessId, starRating, businessAddres
       const imageUrls = await uploadPhotosService(businessName, reviewImages)
       await createANewReview({...reviewDataServer, reviewImages: imageUrls})
     } catch (err) {
-      toast.error(err.message)
+      toast.error(err.code)
     } finally {
       setIsLoading(false)
       toast.success('Review added successfull')

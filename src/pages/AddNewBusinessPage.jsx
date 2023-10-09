@@ -3,12 +3,14 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import { useAddNewBusinessContext } from '../context/AddNewBusiness';
 import { Link } from 'react-router-dom';
+import Loader from '../components/Loader';
 
 
 const AddNewBusinessPage = () => {
     document.title = 'Add new business'
-    const { step, back, steps, currentStepIndex, isFirstStep, userBusinesses } = useAddNewBusinessContext();
+    const { step, back, steps, currentStepIndex, isFirstStep, userBusinesses, isLoading } = useAddNewBusinessContext();
     const progess = Math.floor((currentStepIndex + 1) / steps.length * 100)
+    if(isLoading) return <Loader />
     return (
         <div>
             {

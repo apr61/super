@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Search from '../components/Search';
-import Loader from'../components/Loader';
+import Loader from '../components/Loader';
 import { CategoriesDropDown } from '../constants/Categories';
 import DropdownHover from '../components/DropdownHover';
 import { useBusinesses } from '../context/Businesses';
@@ -30,7 +30,9 @@ export const Home = () => {
       const reviews = await getAllReviewsService()
       setReviews(reviews)
     } catch (error) {
-      toast.error(error.message)
+      err = err.code.split('/')[1].split('-').join(' ')
+      toast.error(err);
+      return
     }
     finally {
       setIsLoading(false)

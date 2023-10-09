@@ -20,11 +20,11 @@ import toast from 'react-hot-toast';
 import Loader from '../components/Loader';
 import { useAuthContext } from '../context/AuthContext';
 
-export const imageStyles = ['col-span-2 row-span-2', 'col-start-3', 'col-start-4', 'col-start-3 row-start-2', 'col-start-4 row-start-2']
+const imageStyles = ['col-span-2 row-span-2', 'col-start-3', 'col-start-4', 'col-start-3 row-start-2', 'col-start-4 row-start-2']
 
 const SingleBusiness = () => {
   const location = useLocation();
-  const {currentUser} = useAuthContext()
+  const { currentUser } = useAuthContext()
   const businessId = getBusinessIdFromRoutePath(location.pathname)
   const [isLoading, setIsLoading] = useState(true);
   const [business, setBusiness] = useState({});
@@ -36,7 +36,9 @@ const SingleBusiness = () => {
       const data = await getBusinessByIdService(businessId);
       setBusiness({ ...data });
     } catch (err) {
+      err = err.code.split('/')[1].split('-').join(' ')
       toast.error(err);
+      return
     } finally {
       setIsLoading(false);
     }
@@ -48,7 +50,9 @@ const SingleBusiness = () => {
       const data = await getAllReviewsByBusinessIdService(businessId);
       setReviews([...data])
     } catch (err) {
-      toast.error(err)
+      err = err.code.split('/')[1].split('-').join(' ')
+      toast.error(err);
+      return
     } finally {
       setIsLoading(false)
     }
@@ -107,7 +111,7 @@ const SingleBusiness = () => {
       <div className='grid grid-cols-4 grid-rows-2 rounded-xl overflow-hidden gap-1 max-h-[30rem] my-6'>
         {
           business.businessImages.map((img, i) => (
-            <img key={img} className={`object-cover ${imageStyles[i]}`} src={img} alt={business.businessName + i + 1} loading='lazy' />
+            i <= 5 && <img key={img} className={`object-cover ${imageStyles[i]}`} src={img} alt={business.businessName + i + 1} loading='lazy' />
           ))
         }
       </div>

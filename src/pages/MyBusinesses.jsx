@@ -12,11 +12,12 @@ import VolumeUpOutlinedIcon from '@mui/icons-material/VolumeUpOutlined';
 import TvOutlinedIcon from '@mui/icons-material/TvOutlined';
 import toast from 'react-hot-toast'
 import Loader from '../components/Loader'
-import { imageStyles } from './SingleBusiness'
 import ReviewStar from '../components/ReviewStar'
 import { useBusinesses } from '../context/Businesses'
 import { dateFormatterDDMM, days } from '../utils/timeUtils'
 import { getAllReviewsByBusinessIdService } from '../services/review';
+
+const imageStyles = ['col-span-2 row-span-2', 'col-start-3', 'col-start-4', 'col-start-3 row-start-2', 'col-start-4 row-start-2']
 
 const MyBusinesses = () => {
   document.title = 'My businesses'
@@ -30,9 +31,15 @@ const MyBusinesses = () => {
   const getUserBusinesses = async (uid) => {
     try {
       const data = await getAllBusinessesByUidService(uid)
-      setUserBusinesses(data[0])
+      if (data.length > 0) {
+        setUserBusinesses(data[0])
+      } else {
+        setUserBusinesses({})
+      }
     } catch (err) {
-      toast.error(err.message)
+      err = err.code.split('/')[1].split('-').join(' ')
+      toast.error(err);
+      return
     } finally {
       setIsLoading(false)
     }
@@ -55,7 +62,7 @@ const MyBusinesses = () => {
   useEffect(() => {
     if (isLoading) return
     getAllReviewsByBusinessId(userBusinesses.businessId)
-  }, [userBusinesses.businessId])
+  }, [userBusinesses?.businessId])
 
   const averageRating = reviews.length > 0 ? reviews.reduce((acc, curr) => {
     acc += curr.rating
@@ -113,7 +120,7 @@ const MyBusinesses = () => {
             <div className='grid grid-cols-4 grid-rows-2 rounded-xl overflow-hidden gap-1 max-h-[30rem] my-6'>
               {
                 userBusinesses.businessImages.map((img, i) => (
-                  <img key={img} className={`object-cover ${imageStyles[i]}`} src={img} alt={userBusinesses.businessName + i + 1} loading='lazy' />
+                  i < 5 && <img key={img} className={`object-cover ${imageStyles[i]}`} src={img} alt={userBusinesses.businessName + i + 1} loading='lazy' />
                 ))
               }
             </div>
