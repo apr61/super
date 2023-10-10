@@ -37,7 +37,7 @@ const Search = () => {
                   </div>
                   <div>
                     {
-                      subcategory.map(category => <p className='bg-gray-200 text-gray-700 font-semibold p-1 text-sm w-fit rounded-md capitalize'>{category}</p>)
+                      subcategory.map(category => <p key={category} className='bg-gray-200 text-gray-700 font-semibold p-1 text-sm w-fit rounded-md capitalize'>{category}</p>)
                     }
                   </div>
                   <div>

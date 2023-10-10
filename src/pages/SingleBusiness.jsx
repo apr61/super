@@ -170,7 +170,7 @@ const SingleBusiness = () => {
         <div className='flex max-w-[40rem] justify-between'>
           <h2 className='text-xl font-bold'>Reviews</h2>
           {
-            business.uid !== currentUser.uid && (
+            business.uid !== currentUser?.uid && (
               <button className='border px-4 py-2 rounded-md bg-primary-300 hover:bg-opacity-80' onClick={handleWriteReview}>Write a reviews</button>
             )
           }

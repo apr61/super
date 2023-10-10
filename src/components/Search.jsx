@@ -5,8 +5,8 @@ import { createSearchParams, useNavigate } from 'react-router-dom';
 
 const Search = ({ extraStyles }) => {
     const { prevSearchParams } = useBusinesses()
-    const [desc, setDesc] = useState(prevSearchParams.find_desc || "")
-    const [location, setLocation] = useState(prevSearchParams.find_location || "")
+    const [desc, setDesc] = useState(prevSearchParams?.find_desc || "")
+    const [location, setLocation] = useState(prevSearchParams?.find_location || "")
     const navigate = useNavigate()
     function handleOnclick() {
         navigate({
